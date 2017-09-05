@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import AppNav from './AppNav';
+import PostList from './PostList'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <AppNav/>
-        Hello World!
+        <PostList />
       </div>
     );
   }
