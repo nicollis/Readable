@@ -1,5 +1,5 @@
 import React from 'react'
-import { Well, Row, Col } from 'react-bootstrap'
+import { Well, Row, Col, Label } from 'react-bootstrap'
 import GoHeart from 'react-icons/lib/go/heart'
 import GoFlame from 'react-icons/lib/go/flame'
 import moment from 'moment'
@@ -24,7 +24,7 @@ export default function Post({data, onUpvote, onDownvote}) {
     </Col>
     <Col xs={2} className='text-right vcenter'>
       <Row>
-        {author} / {category}
+        {author} | <Label>{category}</Label>
       </Row>
       <Row>
         { moment(timestamp).fromNow() }
