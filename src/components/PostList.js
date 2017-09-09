@@ -3,32 +3,41 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Dropdown from 'react-dropdown'
 import Post from './Post'
-import { getPosts } from '../actions'
+import { getPosts, changeFilter, SORT_OPTIONS } from '../actions'
 
 class PostList extends Component {
-
-  // TODO BUILD OUT SORT FUNCTION
+  constructor() {
+    super()
+    this.reorderList = this.reorderList.bind(this)
+  }
 
   componentDidMount() {
     this.props.getPosts()
   }
 
+  reorderList = (sort) => {
+    this.props.changeFilter(sort)
+  }
+
+  sort(sortTarget) {
+    return function(firstValue, sectionValue) {
+      return firstValue[sortTarget] < sectionValue[sortTarget]
+    }
+  }
+
   render() {
     const posts_list = this.props.posts.data || [ ]
-    const sort_opts = [
-      { value: 'votes', label: 'Up Votes' },
-      { value: 'time', label: 'Newest' }
-    ]
+    const filter = this.props.posts.filter
 
     return(
       <Col>
-        <Row style={{'marginBottom': '10'}}>
+        <Row style={{'marginBottom': '10px'}}>
           <Col sm={2} smOffset={10}>
-            <Dropdown className='' options={sort_opts} onChange={()=>{}} value={sort_opts[0]} placeholder="Sort Post"/>
+            <Dropdown className='' options={SORT_OPTIONS} onChange={this.reorderList} value={ filter } placeholder="Sort Post"/>
           </Col>
         </Row>
         <Row>
-          { posts_list.map(post => (<Post key={post.id} data={post}/>)) }
+          { posts_list.sort(this.sort(filter.sortColumn)).map(post => (<Post key={post.id} data={post}/>)) }
         </Row>
       </Col>
     )
@@ -36,15 +45,16 @@ class PostList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { posts } = state
+  const { posts, } = state
 
   return {
-    posts
+    posts,
   }
 }
 
 const mapDispatchToProps = {
-  getPosts,
+  getPosts, 
+  changeFilter,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)
