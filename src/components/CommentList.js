@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel, Col } from 'react-bootstrap'
+import { Panel, Col, Row } from 'react-bootstrap'
 import Comment from './Comment'
-import { getComments } from '../actions'
+import Dropdown from 'react-dropdown'
+import { getComments, changeFilter, SORT_OPTIONS, CHANGE_COMMENT_FILTER } from '../actions'
+import { sort } from '../utils/helpers'
 
 class CommentList extends Component {
   
@@ -15,11 +17,22 @@ class CommentList extends Component {
     <h3>Comments</h3>
   )
 
+  reorderList = (sort) => {
+    this.props.changeFilter(sort, CHANGE_COMMENT_FILTER)
+  }
+
   render() {
     const comments = this.props.comments.data || [ ]
+    const filter = this.props.comments.filter
+
     return (
       <Panel header={ this.panelTitle }>
-        { comments.map(comment => ( <Comment key={comment.id} data={comment}/> )) }
+        <Row style={{'marginBottom': '10px'}}>
+          <Col sm={2} smOffset={10}>
+            <Dropdown className='' options={SORT_OPTIONS} onChange={this.reorderList} value={ filter } placeholder="Sort Post"/>
+          </Col>
+        </Row>
+        { comments.sort(sort(filter.sortColumn)).map(comment => ( <Comment key={comment.id} data={comment}/> )) }
       </Panel>
     )
   }
@@ -35,6 +48,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getComments, 
+  changeFilter,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList)

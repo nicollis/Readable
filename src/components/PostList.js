@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Dropdown from 'react-dropdown'
 import Post from './Post'
-import { getPosts, changeFilter, SORT_OPTIONS } from '../actions'
+import { getPosts, changeFilter, SORT_OPTIONS, CHANGE_POST_FILTER } from '../actions'
+import { sort } from '../utils/helpers'
 
 class PostList extends Component {
   constructor() {
@@ -16,15 +17,9 @@ class PostList extends Component {
   }
 
   reorderList = (sort) => {
-    this.props.changeFilter(sort)
+    this.props.changeFilter(sort, CHANGE_POST_FILTER)
   }
-
-  sort(sortTarget) {
-    return function(firstValue, sectionValue) {
-      return firstValue[sortTarget] < sectionValue[sortTarget]
-    }
-  }
-
+  
   render() {
     const posts_list = this.props.posts.data || [ ]
     const filter = this.props.posts.filter
@@ -37,7 +32,7 @@ class PostList extends Component {
           </Col>
         </Row>
         <Row>
-          { posts_list.sort(this.sort(filter.sortColumn)).map(post => (<Post key={post.id} data={post}/>)) }
+          { posts_list.sort(sort(filter.sortColumn)).map(post => (<Post key={post.id} data={post}/>)) }
         </Row>
       </Col>
     )

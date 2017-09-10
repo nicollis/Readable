@@ -3,3 +3,9 @@ export function capitalize (str = '') {
     ? ''
     : str[0].toUpperCase() + str.slice(1)
 }
+
+export function sort(sortTarget) {
+  return function(firstValue, sectionValue) {
+    return firstValue[sortTarget] < sectionValue[sortTarget]
+  }
+}
