@@ -11,4 +11,7 @@ export default {
   get: (id) => {
     return client.get(`${getRootUrl()}/posts/${id}`)
   },
+  vote: (id, vote) => {
+    return client.post(`${getRootUrl()}/posts/${id}`).send({option: vote})
+  }
 }

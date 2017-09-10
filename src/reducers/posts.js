@@ -1,7 +1,8 @@
 import { 
   GET_POSTS, GET_POST, 
   CHANGE_FILTER, CHANGE_POST_FILTER, 
-  UP_VOTES, GET_COMMENTS
+  UP_VOTES, GET_COMMENTS,
+  POST_VOTE,
 } from '../actions'
 
 const getPosts = (state, action) => {
@@ -45,6 +46,23 @@ const countComments = ( state, action ) => {
       [action.params.post_id]: { comment_count: action.payload.length }
     }
   }
+} 
+
+const postVote = ( state, action ) => {
+  let post = action.payload || { }
+  let posts = state.data.filter(_post => _post.id !== post.id)
+  if (action.payload && !action.error) {
+    posts.push(post)
+  }
+  let details = post.id === state.details.id ? post : state.details
+
+  return {
+    ...state,
+    loading: action.loading,
+    error: action.error,
+    data: posts,
+    details: details,
+  }
 }
 
 const initalState = {
@@ -62,6 +80,7 @@ const ACTION_HANDLERS = {
   [CHANGE_POST_FILTER]: changeFilter,
   [CHANGE_FILTER]: changeFilter,
   [GET_COMMENTS]: countComments,
+  [POST_VOTE]: postVote,
 }
 
 export default function posts(state = initalState, action) {

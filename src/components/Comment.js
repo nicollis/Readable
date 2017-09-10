@@ -3,11 +3,11 @@ import { Well, Row, Col } from 'react-bootstrap'
 import Score from './Score'
 import moment from 'moment'
 
-export default function Comment({data, onUpvote, onDownvote}) {
-  const { timestamp, body, author, voteScore, id } = data
+export default function Comment({data, onVote}) {
+  const { timestamp, body, author, voteScore } = data
   return (
    <Well bsSize={"sm"} >
-    <Score score={voteScore} upVote={onUpvote} downVote={onDownvote} />
+    <Score score={voteScore} upVote={onVote}  />
     <Col xs={9} className='vcenter'>
       <div style={{fontSize: '15px'}}>{body}</div>
     </Col>
