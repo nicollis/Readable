@@ -3,6 +3,7 @@ import { handleHttpResponse } from '../utils/handle-http-response'
 
 export const GET_POSTS = 'GET_POSTS'
 export const CHANGE_FILTER = 'CHANGE_FILTER'
+export const GET_POST = 'GET_POST'
 
 /* Filter Sort Options */
 export const UP_VOTES = { value: 'UP_VOTES', label: 'Up Votes', sortColumn: 'voteScore' }
@@ -19,6 +20,12 @@ export function getPosts(category) {
       return handleHttpResponse(dispatch, GET_POSTS, PostsAPI.index())
     else
       return handleHttpResponse(dispatch, GET_POSTS, PostsAPI.show(category))
+  }
+}
+
+export function getPost(post_id) {
+  return(dispatch) => {
+    return handleHttpResponse(dispatch, GET_POST, PostsAPI.get(post_id))
   }
 }
 

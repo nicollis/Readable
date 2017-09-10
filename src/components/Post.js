@@ -1,26 +1,16 @@
 import React from 'react'
 import { Well, Row, Col, Label } from 'react-bootstrap'
-import GoHeart from 'react-icons/lib/go/heart'
-import GoFlame from 'react-icons/lib/go/flame'
+import { Link } from 'react-router-dom'
+import Score from './Score'
 import moment from 'moment'
 
 export default function Post({data, onUpvote, onDownvote}) {
-  const { timestamp, title, author, category, voteScore } = data
+  const { timestamp, title, author, category, voteScore, id } = data
   return (
    <Well>
-    <Col xs={1} className="text-center vcenter">
-      <Row>
-        <GoHeart/>
-      </Row>
-      <Row>
-        {voteScore}
-      </Row>
-      <Row>
-        <GoFlame/>
-      </Row>
-    </Col>
+    <Score score={voteScore} upVote={onUpvote} downVote={onDownvote} />
     <Col xs={9} className='vcenter'>
-      <div style={{fontSize: '30px'}}>{title}</div>
+      <div style={{fontSize: '30px'}}><Link to={`/${category}/${id}`} >{title}</ Link></div>
     </Col>
     <Col xs={2} className='text-right vcenter'>
       <Row>

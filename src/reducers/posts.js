@@ -1,4 +1,4 @@
-import { GET_POSTS, CHANGE_FILTER, UP_VOTES } from '../actions'
+import { GET_POSTS, GET_POST, CHANGE_FILTER, UP_VOTES } from '../actions'
 
 const getPosts = (state, action) => {
   const posts = action.payload || state.data
@@ -6,6 +6,17 @@ const getPosts = (state, action) => {
   return {
     ...state,
     data: posts,
+    loading: action.loading,
+    error: action.error
+  }
+}
+
+const getPost = (state, action) => {
+  const post = action.payload || state.details
+
+  return {
+    ...state,
+    details: post,
     loading: action.loading,
     error: action.error
   }
@@ -22,11 +33,13 @@ const initalState = {
   loading: false,
   error: false,
   data: [  ],
+  details: {  },
   filter: UP_VOTES
 }
 
 const ACTION_HANDLERS = {
   [GET_POSTS]: getPosts,
+  [GET_POST]: getPost,
   [CHANGE_FILTER]: changeFilter,
 }
 

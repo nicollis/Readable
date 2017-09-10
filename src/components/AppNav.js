@@ -24,7 +24,7 @@ class AppNav extends Component {
         </Navbar.Header>
         <Nav>
           { categories_list.map(({name,path}) => (
-              <NavItem key={name} href={path}> {capitalize(name)} </NavItem>
+              <NavItem key={name} href={`/${path}`}> {capitalize(name)} </NavItem>
           )) }
           <NavItem><GoRadioTower/> Add Post</NavItem>
         </Nav>

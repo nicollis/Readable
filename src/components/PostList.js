@@ -12,7 +12,7 @@ class PostList extends Component {
   }
 
   componentDidMount() {
-    this.props.getPosts()
+    this.props.getPosts(this.props.match.params.category)
   }
 
   reorderList = (sort) => {
