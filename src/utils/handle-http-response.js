@@ -1,4 +1,4 @@
-export function handleHttpResponse (dispatch, constant, response) {
+export function handleHttpResponse (dispatch, constant, response, params) {
   dispatch({ type: constant, loading: true })
 
   return response.then((res) => {
@@ -6,6 +6,7 @@ export function handleHttpResponse (dispatch, constant, response) {
       loading: false,
       type: constant,
       payload: res.body,
+      params: params
     })
     return res.body
   }).catch((err) => {
@@ -13,7 +14,8 @@ export function handleHttpResponse (dispatch, constant, response) {
       loading: false,
       error: true,
       type: constant,
-      payload: err
+      payload: err,
+      params: params
     })
     return err
   })

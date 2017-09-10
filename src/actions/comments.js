@@ -5,6 +5,6 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 
 export function getComments(post_id) {
   return (dispatch) => {
-    return handleHttpResponse(dispatch, GET_COMMENTS, CommentsAPI.index(post_id))
+    return handleHttpResponse(dispatch, GET_COMMENTS, CommentsAPI.index(post_id), {post_id: post_id})
   }
 }
