@@ -1,7 +1,7 @@
 import { GET_COMMENTS, CHANGE_FILTER,
   CHANGE_COMMENT_FILTER, 
   UP_VOTES, COMMENT_VOTE,
-  COMMENT_MODAL,
+  COMMENT_MODAL, DELETE_COMMENT,
 } from '../actions'
 
 const getComments = (state, action) => {
@@ -27,7 +27,7 @@ const changeFilter = (state, action) => {
   }
 }
 
-const commentVote = (state, action) => {
+const updateComment = (state, action) => {
   let comment = action.payload || { }
   let comments = state.data.filter(_comment => _comment.id !== comment.id)
   if (action.payload && !action.error) {
@@ -68,8 +68,9 @@ const ACTION_HANDLERS = {
   [GET_COMMENTS]: getComments,
   [CHANGE_COMMENT_FILTER]: changeFilter,
   [CHANGE_FILTER]: changeFilter,
-  [COMMENT_VOTE]: commentVote,
+  [COMMENT_VOTE]: updateComment,
   [COMMENT_MODAL]: toggleModal,
+  [DELETE_COMMENT]: updateComment,
 }
 
 export default function comments(state = initalState, action) {

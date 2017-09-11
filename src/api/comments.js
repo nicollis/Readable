@@ -10,5 +10,8 @@ export default {
   },
   vote: (id, vote) => {
     return client.post(`${getRootUrl()}/comments/${id}`).send({option: vote})
+  },
+  delete: (comment_id) => {
+    return client.delete(`${getRootUrl()}/comments/${comment_id}`)
   }
 }

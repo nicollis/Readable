@@ -1,10 +1,11 @@
 import React from 'react'
-import { Well, Row, Col } from 'react-bootstrap'
+import { Well, Row, Col, Button } from 'react-bootstrap'
 import Score from './Score'
 import moment from 'moment'
+import GoTrashcan from 'react-icons/lib/go/trashcan'
 
-export default function Comment({data, onVote}) {
-  const { timestamp, body, author, voteScore } = data
+export default function Comment({data, onVote, onDelete, onEdit}) {
+  const { timestamp, body, author, voteScore, id } = data
   return (
    <Well bsSize={"sm"} >
     <Score score={voteScore} upVote={onVote}  />
@@ -12,6 +13,9 @@ export default function Comment({data, onVote}) {
       <div style={{fontSize: '15px'}}>{body}</div>
     </Col>
     <Col xs={2} className='text-right vcenter'>
+      <Row>
+       <Button onClick={()=>onDelete(id)} bsSize='xsmall' bsStyle='danger' ><GoTrashcan /></Button> 
+      </Row>
       <Row>
         {author}
       </Row>

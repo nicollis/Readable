@@ -5,10 +5,11 @@ import Comment from './Comment'
 import Dropdown from 'react-dropdown'
 import { getComments, changeFilter, SORT_OPTIONS,
   CHANGE_COMMENT_FILTER, commentVote, toggleCommentModal,
-  postComment,
+  postComment, deleteComment
 } from '../actions'
 import { sort, FieldGroup, uuid } from '../utils/helpers'
 import Modal from 'react-modal'
+import GoRadioTower from 'react-icons/lib/go/radio-tower'
 
 class CommentList extends Component {
   
@@ -42,6 +43,10 @@ class CommentList extends Component {
     this.props.postComment(payload)
   }
 
+  deleteComment = (comment_id) => {
+    this.props.deleteComment(comment_id)
+  }
+
   modal = (isOpen, onClose) => (
       <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Add Comment" >
         <h3>Add Comment</h3>
@@ -61,17 +66,18 @@ class CommentList extends Component {
       <Panel header={ this.panelTitle(comments.length) }>
         <Row style={{'marginBottom': '10px'}}>
           <Col sm={2}>
-            <Button onClick={ this.props.toggleCommentModal }>Add Comment</Button>
+            <Button onClick={ this.props.toggleCommentModal }><GoRadioTower /> Add Comment</Button>
           </Col>
           <Col sm={2} smOffset={8}>
             <Dropdown className='' options={SORT_OPTIONS} onChange={this.reorderList} value={ filter } placeholder="Sort Post"/>
           </Col>
         </Row>
-        { comments.sort(sort(filter.sortColumn)).map(comment => ( 
+        { comments.filter(c=>!c.deleted).sort(sort(filter.sortColumn)).map(comment => ( 
           <Comment 
             key={comment.id} 
             data={comment}
             onVote={(positive)=>{this.vote(positive, comment.id)}}
+            onDelete={this.deleteComment.bind(this)}
           /> 
         )) }
         
@@ -95,6 +101,7 @@ const mapDispatchToProps = {
   commentVote,
   toggleCommentModal,
   postComment,
+  deleteComment,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList)

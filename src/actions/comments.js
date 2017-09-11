@@ -5,6 +5,7 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 export const POST_COMMENT = 'POST_COMMENT'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_MODAL = 'COMMENT_MODAL'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function getComments(post_id) {
   return (dispatch) => {
@@ -27,5 +28,11 @@ export function commentVote(comment_id, vote) {
 export function toggleCommentModal() {
   return {
     type: COMMENT_MODAL,
+  }
+}
+
+export function deleteComment(comment_id) {
+  return (dispatch) => {
+    return handleHttpResponse(dispatch, DELETE_COMMENT, CommentsAPI.delete(comment_id), {comment_id: comment_id})
   }
 }
