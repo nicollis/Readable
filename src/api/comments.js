@@ -13,5 +13,8 @@ export default {
   },
   delete: (comment_id) => {
     return client.delete(`${getRootUrl()}/comments/${comment_id}`)
+  },
+  put: (comment_id, payload) => {
+    return client.put(`${getRootUrl()}/comments/${comment_id}`).send(payload)
   }
 }

@@ -6,6 +6,8 @@ export const POST_COMMENT = 'POST_COMMENT'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_MODAL = 'COMMENT_MODAL'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 
 export function getComments(post_id) {
   return (dispatch) => {
@@ -34,5 +36,18 @@ export function toggleCommentModal() {
 export function deleteComment(comment_id) {
   return (dispatch) => {
     return handleHttpResponse(dispatch, DELETE_COMMENT, CommentsAPI.delete(comment_id), {comment_id: comment_id})
+  }
+}
+
+export function updateComment(comment_id, payload) {
+  return (dispatch) => {
+    return handleHttpResponse(dispatch, UPDATE_COMMENT, CommentsAPI.put(comment_id, payload))
+  }
+}
+
+export function editComment(comment_id) {
+  return {
+    type: EDIT_COMMENT,
+    payload: comment_id
   }
 }

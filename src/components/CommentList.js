@@ -5,7 +5,7 @@ import Comment from './Comment'
 import Dropdown from 'react-dropdown'
 import { getComments, changeFilter, SORT_OPTIONS,
   CHANGE_COMMENT_FILTER, commentVote, toggleCommentModal,
-  postComment, deleteComment
+  postComment, deleteComment, editComment, updateComment,
 } from '../actions'
 import { sort, FieldGroup, uuid } from '../utils/helpers'
 import Modal from 'react-modal'
@@ -32,31 +32,49 @@ class CommentList extends Component {
   }
 
   addComment = (event) => {
-    const payload = {
-      id: uuid(),
-      timestamp: Date.now(),
-      body: event.target.body.value,
-      author: event.target.author.value,
-      parentId: this.props.comments.meta.parentId 
+    switch(this.props.comments.meta.editComment === false) {
+      case true:
+        this.props.postComment({
+          id: uuid(),
+          timestamp: Date.now(),
+          body: event.target.body.value,
+          author: event.target.author.value,
+          parentId: this.props.comments.meta.parentId 
+        })
+        break
+      case false:
+        this.props.updateComment(this.props.comments.details.id,{
+          timestamp: Date.now(),
+          body: event.target.body.value
+        })
+        break
+      default:
+        break
     }
-    
-    this.props.postComment(payload)
   }
 
   deleteComment = (comment_id) => {
     this.props.deleteComment(comment_id)
   }
 
-  modal = (isOpen, onClose) => (
+  editComment = (comment_id) => {
+    this.props.editComment(comment_id)
+  }
+
+  modal = (isOpen, onClose) => {
+    const isEditing = this.props.comments.meta.editComment !== false
+    const { author, body } = this.props.comments.details
+    return (
       <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Add Comment" >
-        <h3>Add Comment</h3>
+        <h3>{isEditing ? 'Edit' : 'Add'} Comment</h3>
         <form onSubmit={this.addComment.bind(this)}>
-          <FieldGroup id='author' type='text' label="Username" placeholder='Username' /> 
-          <FieldGroup id='body' componentClass='textarea' label="Comment" placeholder='comment' />
+          <FieldGroup id='author' type='text' label="Username" placeholder='Username' disabled={isEditing} defaultValue={author}/> 
+          <FieldGroup id='body' componentClass='textarea' label="Comment" placeholder='comment' defaultValue={body} />
           <Button type="submit">Submit</Button>
         </form>
       </Modal>
-  )
+    )
+  }
 
   render() {
     const comments = this.props.comments.data || [ ]
@@ -78,6 +96,7 @@ class CommentList extends Component {
             data={comment}
             onVote={(positive)=>{this.vote(positive, comment.id)}}
             onDelete={this.deleteComment.bind(this)}
+            onEdit={this.editComment.bind(this)}
           /> 
         )) }
         
@@ -102,6 +121,8 @@ const mapDispatchToProps = {
   toggleCommentModal,
   postComment,
   deleteComment,
+  editComment,
+  updateComment,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList)
