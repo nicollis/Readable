@@ -1,16 +1,22 @@
 import { GET_COMMENTS, CHANGE_FILTER,
   CHANGE_COMMENT_FILTER, 
-  UP_VOTES, COMMENT_VOTE, 
+  UP_VOTES, COMMENT_VOTE,
+  COMMENT_MODAL,
 } from '../actions'
 
 const getComments = (state, action) => {
   const comments = action.payload || state.data
+  const post_id = (action.params && action.params.post_id) || state.meta.parentId
   
   return {
     ...state,
     data: comments,
     loading: action.loading,
-    error: action.error
+    error: action.error,
+    meta: {
+      ...state.meta,
+      parentId: post_id
+    }
   }
 }
 
@@ -36,11 +42,26 @@ const commentVote = (state, action) => {
   }
 }
 
+const toggleModal = (state, action) => {
+  return {
+    ...state,
+    meta: {
+      ...state.meta,
+      modalOpen: !state.meta.modalOpen 
+    }
+  }
+}
+
 const initalState = {
   loading: false,
   error: false,
   data: [ ],
   filter: UP_VOTES,
+  details: { },
+  meta: {
+    modalOpen: false,
+    parentId: undefined,
+  }
 }
 
 const ACTION_HANDLERS = {
@@ -48,6 +69,7 @@ const ACTION_HANDLERS = {
   [CHANGE_COMMENT_FILTER]: changeFilter,
   [CHANGE_FILTER]: changeFilter,
   [COMMENT_VOTE]: commentVote,
+  [COMMENT_MODAL]: toggleModal,
 }
 
 export default function comments(state = initalState, action) {
