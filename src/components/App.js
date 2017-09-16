@@ -19,7 +19,7 @@ class App extends Component {
             <CommentList {...props} />
           </div>
         )}/>
-        <Route exact path='/:category/new/editor' component={PostForm}/>
+        <Route exact path='/:category/:post_id/editor' component={PostForm}/>
       </div>
     );
   }

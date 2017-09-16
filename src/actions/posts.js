@@ -6,6 +6,7 @@ export const GET_POST = 'GET_POST'
 export const POST_VOTE = 'POST_VOTE'
 export const POST_POST = 'POST_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const UPDATE_POST = 'UPDATE_POST'
 
 
 export function getPosts(category) {
@@ -38,5 +39,11 @@ export function postPost(payload) {
 export function deletePost(post_id) {
   return (dispatch) => {
     return handleHttpResponse(dispatch, DELETE_POST, PostsAPI.delete(post_id), {post_id: post_id})
+  }
+}
+
+export function updatePost(post_id, payload) {
+  return (dispatch) => {
+    return handleHttpResponse(dispatch, UPDATE_POST, PostsAPI.put(post_id, payload))
   }
 }

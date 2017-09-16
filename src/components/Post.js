@@ -36,7 +36,7 @@ class Post extends Component {
       </Col>
       <Col xs={2} className='text-right vcenter'>
         <Row>
-         <Button onClick={()=>{}} bsSize='xsmall' bsStyle='warning' style={{marginRight: '5px'}}><GoPencil /></Button> 
+         <Button onClick={()=>{window.location=`/${category}/${id}/editor`}}bsSize='xsmall' bsStyle='warning' style={{marginRight: '5px'}}><GoPencil /></Button> 
          <Button onClick={()=>this.props.deletePost(id)} bsSize='xsmall' bsStyle='danger' ><GoTrashcan /></Button> 
         </Row>
         <Row>

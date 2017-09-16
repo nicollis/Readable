@@ -19,5 +19,8 @@ export default {
   },
   delete: (post_id) => {
     return client.delete(`${getRootUrl()}/posts/${post_id}`)
+  },
+  put: (post_id, payload) => {
+    return client.put(`${getRootUrl()}/posts/${post_id}`).send(payload)
   }
 }
