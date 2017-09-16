@@ -32,7 +32,7 @@ class PostList extends Component {
           </Col>
         </Row>
         <Row>
-          { posts_list.sort(sort(filter.sortColumn)).map(post => (<Post key={post.id} data={post}/>)) }
+          { posts_list.filter(p=>!p.deleted).sort(sort(filter.sortColumn)).map(post => (<Post key={post.id} data={post}/>)) }
         </Row>
       </Col>
     )

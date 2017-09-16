@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Well, Row, Col, Label } from 'react-bootstrap'
+import { Well, Row, Col, Label, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Score from './Score'
 import moment from 'moment'
-import { getComments, postVote } from '../actions'
+import { getComments, postVote, deletePost } from '../actions'
+import GoTrashcan from 'react-icons/lib/go/trashcan'
+import GoPencil from 'react-icons/lib/go/pencil'
 
 class Post extends Component {
   constructor() {
@@ -34,6 +36,10 @@ class Post extends Component {
       </Col>
       <Col xs={2} className='text-right vcenter'>
         <Row>
+         <Button onClick={()=>{}} bsSize='xsmall' bsStyle='warning' style={{marginRight: '5px'}}><GoPencil /></Button> 
+         <Button onClick={()=>this.props.deletePost(id)} bsSize='xsmall' bsStyle='danger' ><GoTrashcan /></Button> 
+        </Row>
+        <Row>
           {author} | <Label>{category}</Label>
         </Row>
         <Row>
@@ -56,6 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getComments,
   postVote,  
+  deletePost,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -26,7 +26,7 @@ class AppNav extends Component {
           { categories_list.map(({name,path}) => (
               <NavItem key={name} href={`/${path}`}> {capitalize(name)} </NavItem>
           )) }
-          <NavItem><GoRadioTower/> Add Post</NavItem>
+          <NavItem href='/all/new/editor'><GoRadioTower/> Add Post</NavItem>
         </Nav>
       </Navbar>
     )

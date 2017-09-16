@@ -13,5 +13,11 @@ export default {
   },
   vote: (id, vote) => {
     return client.post(`${getRootUrl()}/posts/${id}`).send({option: vote})
+  },
+  post: (payload) => {
+    return client.post(`${getRootUrl()}/posts`).send(payload)
+  },
+  delete: (post_id) => {
+    return client.delete(`${getRootUrl()}/posts/${post_id}`)
   }
 }

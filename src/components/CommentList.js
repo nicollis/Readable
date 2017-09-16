@@ -7,7 +7,8 @@ import { getComments, changeFilter, SORT_OPTIONS,
   CHANGE_COMMENT_FILTER, commentVote, toggleCommentModal,
   postComment, deleteComment, editComment, updateComment,
 } from '../actions'
-import { sort, FieldGroup, uuid } from '../utils/helpers'
+import { sort, uuid } from '../utils/helpers'
+import FieldGroup from './FieldGroup' 
 import Modal from 'react-modal'
 import GoRadioTower from 'react-icons/lib/go/radio-tower'
 

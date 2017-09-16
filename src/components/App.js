@@ -4,6 +4,7 @@ import AppNav from './AppNav';
 import PostList from './PostList'
 import PostDetail from './PostDetail'
 import CommentList from './CommentList'
+import PostForm from './PostForm'
 
 class App extends Component {
   render() {
@@ -12,12 +13,13 @@ class App extends Component {
         <AppNav/>
         <Route exact path="/" component={PostList} />
         <Route exact path="/:category" component={PostList}/>
-        <Route path="/:category/:post_id" render={props => (
+        <Route exact path="/:category/:post_id" render={props => (
           <div>
             <PostDetail {...props} />
             <CommentList {...props} />
           </div>
         )}/>
+        <Route exact path='/:category/new/editor' component={PostForm}/>
       </div>
     );
   }
