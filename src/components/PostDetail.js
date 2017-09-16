@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Well } from 'react-bootstrap'
-import { getPost, postVote } from '../actions'
+import { Row, Col, Well, Button } from 'react-bootstrap'
+import { getPost, postVote, deletePost } from '../actions'
 import Score from './Score'
 import moment from 'moment'
+import GoTrashcan from 'react-icons/lib/go/trashcan'
+import GoPencil from 'react-icons/lib/go/pencil'
 
 class PostDetail extends Component {
   constructor() {
@@ -21,8 +23,13 @@ class PostDetail extends Component {
     this.props.postVote(this.props.posts.details.id, vote)
   }
 
+  delete = (id, category) => {
+    this.props.deletePost(id)
+    window.location = `/${category}`
+  }
+
   render() {
-    const { timestamp, title, author, voteScore, body } = this.props.posts.details
+    const { id, timestamp, title, author, voteScore, body, category } = this.props.posts.details
 
     return(
       <Well>
@@ -32,6 +39,10 @@ class PostDetail extends Component {
           <Row style={{ margin: '30px' }}>{body}</Row>
         </Col>
         <Col xs={2} className='text-right vcenter' style={{ verticalAlign: 'top' }}>
+          <Row>
+           <Button onClick={()=>{window.location=`/${category}/${id}/editor`}}bsSize='xsmall' bsStyle='warning' style={{marginRight: '5px'}}><GoPencil /></Button> 
+           <Button onClick={()=>this.delete(id,category)} bsSize='xsmall' bsStyle='danger' ><GoTrashcan /></Button> 
+          </Row>
           <Row>
             {author}
           </Row>
@@ -55,6 +66,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
    getPost,
    postVote,
+   deletePost,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)
