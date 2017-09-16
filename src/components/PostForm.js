@@ -29,6 +29,8 @@ class PostForm extends Component {
 
   render() {
     const categories = this.props.categories.data.categories || []
+    const path_category = this.props.match.params.category || undefined
+
     return (
       <Col>
         <h3>Add Post</h3>
@@ -37,7 +39,8 @@ class PostForm extends Component {
           <FieldGroup id='body' componentClass='textarea' label='Post' placeholder='post' />
           <FieldGroup id='author' type='text' label='Author' placeholder='username' />
           <FieldGroup id='category' componentClass='select' label='Category' name='category' >
-            { categories.map(category=>(<option key={category.path} value={category.path}>{capitalize(category.name)}</option>)) }
+            { categories.map(category=>(<option key={category.path} value={category.path} selected={path_category === category.path}>
+              {capitalize(category.name)}</option>)) }
           </FieldGroup>
           <Button type='submit'>Submit</Button>
         </form>

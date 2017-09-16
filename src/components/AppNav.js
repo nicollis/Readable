@@ -14,6 +14,7 @@ class AppNav extends Component {
 
   render() {
     const categories_list = this.props.categories.data.categories || [ ]
+    const category = this.props.match.params.category || 'all'
 
     return(
       <Navbar>
@@ -24,9 +25,9 @@ class AppNav extends Component {
         </Navbar.Header>
         <Nav>
           { categories_list.map(({name,path}) => (
-              <NavItem key={name} href={`/${path}`}> {capitalize(name)} </NavItem>
+              <NavItem key={name} href={ `/${path}` } > {capitalize(name)} </NavItem>
           )) }
-          <NavItem href='/all/new/editor'><GoRadioTower/> Add Post</NavItem>
+          <NavItem href={`/${category}/new/editor`}><GoRadioTower/> Add Post</NavItem>
         </Nav>
       </Navbar>
     )

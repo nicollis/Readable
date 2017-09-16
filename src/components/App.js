@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        <AppNav/>
+        <Route path="/:category?" component={AppNav} />
         <Route exact path="/" component={PostList} />
         <Route exact path="/:category" component={PostList}/>
         <Route exact path="/:category/:post_id" render={props => (
